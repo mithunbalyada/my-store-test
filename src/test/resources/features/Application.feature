@@ -1,5 +1,5 @@
 
-  Feature: E-commerce application that is hosted at http://automationpractice.com/index.php with the feature of customer registration, login and ordering few items
+  Feature: E-commerce application http://automationpractice.com/index.php
 
     @SignUp
     Scenario: user/customer registration
@@ -13,7 +13,7 @@
       Then my registration should be successful
 
     @Login
-    Scenario: User/Customer signup
+    Scenario: User/Customer Sign in
       Given I am a registered user
       And I navigate to the home page
       When I click on the Sign in button

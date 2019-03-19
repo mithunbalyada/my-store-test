@@ -9,7 +9,8 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
         features = {"classpath:features"},
         monochrome = true,
-        dryRun = false
+        dryRun = false,
+        plugin = {"json:target/cucumber-report/report.json"}
 )
 public class ApplicationTest {
 

@@ -1,5 +1,6 @@
 package com.mithun.gfk.mystoretest.steps;
 
+import com.mithun.gfk.mystoretest.customer.CustomerInfo;
 import com.mithun.gfk.mystoretest.driver.DriverSetup;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -7,6 +8,7 @@ import cucumber.api.java.Before;
 import cucumber.api.java8.En;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.Fail;
+import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -40,16 +42,21 @@ public class ApplicationSteps extends AbstractSpringBootTestRunner implements En
     @Autowired
     DriverSetup driverSetup;
 
+    @Autowired
+    CustomerInfo customerInfo;
+
     @Value("${test.url}")
     private String testURL;
-
-
 
 
     @Before
     public void setUp()  {
 
         try {
+
+            Assertions.assertThat(customerInfo).isNotNull();
+            LOG.info("Customer Info bean is not null");
+
             Assertions.assertThat(driverSetup).isNotNull();
             driver = driverSetup.getDriver();
             webDriverWait = driverSetup.getWebDriverWait();
@@ -120,8 +127,8 @@ public class ApplicationSteps extends AbstractSpringBootTestRunner implements En
 
         When("I fill my email address in create account section of the page", () -> {
 
-            driver.findElement(By.id("email_create")).sendKeys(getEmail());
-            LOG.info("Filled in email '"+getEmail()+"'");
+            driver.findElement(By.id("email_create")).sendKeys(customerInfo.getEmail());
+            LOG.info("Filled in email '"+customerInfo.getEmail()+"'");
 
         });
 
@@ -151,13 +158,13 @@ public class ApplicationSteps extends AbstractSpringBootTestRunner implements En
 
         When("I provide fill the necessary information", () -> {
 
-            driver.findElement(By.id("customer_firstname")).sendKeys(getFirstName());
-            LOG.info("Keyed in first name as "+getFirstName());
+            driver.findElement(By.id("customer_firstname")).sendKeys(customerInfo.getFirstName());
+            LOG.info("Keyed in first name as "+customerInfo.getFirstName());
 
-            driver.findElement(By.id("customer_lastname")).sendKeys(getLastName());
-            LOG.info("Keyed in last name as "+getLastName());
+            driver.findElement(By.id("customer_lastname")).sendKeys(customerInfo.getLastName());
+            LOG.info("Keyed in last name as "+customerInfo.getLastName());
 
-            driver.findElement(By.id("passwd")).sendKeys(getPassword());
+            driver.findElement(By.id("passwd")).sendKeys(customerInfo.getPassword());
             LOG.info("Keyed in password as XXXXXXXXXX");
 
             LOG.info("Entering date of birth");
@@ -224,7 +231,7 @@ public class ApplicationSteps extends AbstractSpringBootTestRunner implements En
             Assertions.assertThat(heading.getText()).isEqualTo("MY ACCOUNT");
             LOG.info("******Registration is successful*******");
 
-            Assertions.assertThat(driver.findElement(By.className("account")).getText()).contains(getFirstName()+" "+getLastName());
+            Assertions.assertThat(driver.findElement(By.className("account")).getText()).contains(customerInfo.getFirstName()+" "+customerInfo.getLastName());
             LOG.info("FirstName and LastName is displayed on the screen");
 
             Assertions.assertThat(driver.findElement(By.className("info-account")).getText()).contains("Welcome to your account.");
@@ -242,10 +249,10 @@ public class ApplicationSteps extends AbstractSpringBootTestRunner implements En
 
         Given("I am a registered user", () -> {
 
-            Assertions.assertThat(getEmail()).isNotNull();
-            LOG.info("Trying to sign in with the email - "+getEmail());
+            Assertions.assertThat(customerInfo.getEmail()).isNotNull();
+            LOG.info("Trying to sign in with the email - "+customerInfo.getEmail());
 
-            Assertions.assertThat(getPassword()).isNotNull();
+            Assertions.assertThat(customerInfo.getPassword()).isNotNull();
         });
 
 
@@ -266,8 +273,8 @@ public class ApplicationSteps extends AbstractSpringBootTestRunner implements En
 
         When("I fill my Email Address on Already Registered block", () -> {
 
-            driver.findElement(By.id("email")).sendKeys(getEmail());
-            LOG.info("Filled in email '"+getEmail()+"'");
+            driver.findElement(By.id("email")).sendKeys(customerInfo.getEmail());
+            LOG.info("Filled in email '"+customerInfo.getEmail()+"'");
 
         });
 
@@ -275,7 +282,7 @@ public class ApplicationSteps extends AbstractSpringBootTestRunner implements En
 
         When("I fill my Password on Already Registered block", () -> {
 
-            driver.findElement(By.id("passwd")).sendKeys(getPassword());
+            driver.findElement(By.id("passwd")).sendKeys(customerInfo.getPassword());
             LOG.info("Keyed in password XXXXXX");
 
         });
@@ -311,8 +318,8 @@ public class ApplicationSteps extends AbstractSpringBootTestRunner implements En
 
         Then("My username is shown in the header", () -> {
 
-            Assertions.assertThat(driver.findElement(By.className("account")).getText()).contains(getFirstName()+" "+getLastName());
-            LOG.info(getFirstName()+" "+getLastName()+" is displayed in the navigation menu.");
+            Assertions.assertThat(driver.findElement(By.className("account")).getText()).contains(customerInfo.getFirstName()+" "+customerInfo.getLastName());
+            LOG.info(customerInfo.getFirstName()+" "+customerInfo.getLastName()+" is displayed in the navigation menu.");
 
         });
 
@@ -329,7 +336,7 @@ public class ApplicationSteps extends AbstractSpringBootTestRunner implements En
 
         Given("I am a registered user and I am able to login to the portal", () ->{
 
-            LOG.info("Performing Login operation using the credentials "+getEmail());
+            LOG.info("Performing Login operation using the credentials "+customerInfo.getEmail());
             Assertions.assertThat(testURL).isNotNull();
             Assertions.assertThat(driver).isNotNull();
             Assertions.assertThat(webDriverWait).isNotNull();
@@ -341,10 +348,10 @@ public class ApplicationSteps extends AbstractSpringBootTestRunner implements En
             webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.className("login"))).click();
             LOG.info("Sign in button is located and clicked");
 
-            driver.findElement(By.id("email")).sendKeys(getEmail());
-            LOG.info("Filled in email '"+getEmail()+"'");
+            driver.findElement(By.id("email")).sendKeys(customerInfo.getEmail());
+            LOG.info("Filled in email '"+customerInfo.getEmail()+"'");
 
-            driver.findElement(By.id("passwd")).sendKeys(getPassword());
+            driver.findElement(By.id("passwd")).sendKeys(customerInfo.getPassword());
             LOG.info("Keyed in password XXXXXX");
 
             driver.findElement(By.id("SubmitLogin")).click();
