@@ -23,6 +23,8 @@ public class CustomerInfo {
     private static final String lastName = "belly";
     private static final String email = "cukes"+ Calendar.getInstance().getTimeInMillis()+"@cukemail.com";;
     private static final String password = "password";
+    private static final String existingEmail = "cukes1553040384665@cukemail.com";
+    private static final String existingPassword  = "password";
 
     /**
      * Making the default constructor as private so that no one can instantiate it
@@ -54,5 +56,13 @@ public class CustomerInfo {
 
     public static String getPassword() {
         return password;
+    }
+
+    public static String getExistingEmail() {
+        return existingEmail;
+    }
+
+    public static String getExistingPassword() {
+        return existingPassword;
     }
 }

@@ -81,6 +81,11 @@
                     <sourceFeatures>src/test/resources/features</sourceFeatures>
                     <generatedFeatureDirectory>${generated.feature.directory}</generatedFeatureDirectory>
                     <generatedRunnerDirectory>${generated.runner.directory}</generatedRunnerDirectory>
+                    <numberOfTestRuns>1</numberOfTestRuns>
+                    <logLevel>compact</logLevel>
+                    <desiredNumberOfRunners>1</desiredNumberOfRunners>
+                    <parallelizationMode>features</parallelizationMode>
+                    <logLevel>compact</logLevel>
                 </configuration>
             </plugin>
             <plugin>

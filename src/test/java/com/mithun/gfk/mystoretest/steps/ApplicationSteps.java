@@ -8,10 +8,7 @@ import cucumber.api.java.Before;
 import cucumber.api.java8.En;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.Fail;
-import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -273,8 +270,8 @@ public class ApplicationSteps extends AbstractSpringBootTestRunner implements En
 
         When("I fill my Email Address on Already Registered block", () -> {
 
-            driver.findElement(By.id("email")).sendKeys(customerInfo.getEmail());
-            LOG.info("Filled in email '"+customerInfo.getEmail()+"'");
+            driver.findElement(By.id("email")).sendKeys(customerInfo.getExistingEmail());
+            LOG.info("Filled in email '"+customerInfo.getExistingEmail()+"'");
 
         });
 
@@ -282,7 +279,7 @@ public class ApplicationSteps extends AbstractSpringBootTestRunner implements En
 
         When("I fill my Password on Already Registered block", () -> {
 
-            driver.findElement(By.id("passwd")).sendKeys(customerInfo.getPassword());
+            driver.findElement(By.id("passwd")).sendKeys(customerInfo.getExistingPassword());
             LOG.info("Keyed in password XXXXXX");
 
         });
@@ -336,7 +333,7 @@ public class ApplicationSteps extends AbstractSpringBootTestRunner implements En
 
         Given("I am a registered user and I am able to login to the portal", () ->{
 
-            LOG.info("Performing Login operation using the credentials "+customerInfo.getEmail());
+            LOG.info("Performing Login operation using the credentials "+customerInfo.getExistingEmail());
             Assertions.assertThat(testURL).isNotNull();
             Assertions.assertThat(driver).isNotNull();
             Assertions.assertThat(webDriverWait).isNotNull();
@@ -348,10 +345,10 @@ public class ApplicationSteps extends AbstractSpringBootTestRunner implements En
             webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.className("login"))).click();
             LOG.info("Sign in button is located and clicked");
 
-            driver.findElement(By.id("email")).sendKeys(customerInfo.getEmail());
-            LOG.info("Filled in email '"+customerInfo.getEmail()+"'");
+            driver.findElement(By.id("email")).sendKeys(customerInfo.getExistingEmail());
+            LOG.info("Filled in email '"+customerInfo.getExistingEmail()+"'");
 
-            driver.findElement(By.id("passwd")).sendKeys(customerInfo.getPassword());
+            driver.findElement(By.id("passwd")).sendKeys(customerInfo.getExistingPassword());
             LOG.info("Keyed in password XXXXXX");
 
             driver.findElement(By.id("SubmitLogin")).click();
