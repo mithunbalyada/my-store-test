@@ -29,7 +29,10 @@
       Scenario: Checkout few clothes
         Given I am a registered user and I am able to login to the portal
         When I click Women button in the header
-        And I click the product with name "Faded Short Sleeve T-shirts"
+        And I click the product with name
+          | Printed Chiffon Dress       |
+          | Faded Short Sleeve T-shirts |
+          | Blouse                      |
         And I click Add to cart
         And I click on Proceed to Checkout on the popup window
         And I click on Proceed to Checkout on the summary section

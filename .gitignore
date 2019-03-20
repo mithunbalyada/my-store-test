@@ -29,10 +29,10 @@
 .vscode/
 
 ### logs ###
-/logs/
+
 
 ###Mac OS Files###
 **/.DS_Store
 
 ###Maven###
-/target/
+

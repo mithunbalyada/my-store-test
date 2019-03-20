@@ -6,6 +6,7 @@ import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java8.En;
+import io.cucumber.datatable.DataTable;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.Fail;
 import org.openqa.selenium.*;
@@ -364,7 +365,9 @@ public class ApplicationSteps extends AbstractSpringBootTestRunner implements En
         });
 
 
-        When("I click the product with name {string}", (String productName) -> {
+        When("I click the product with name", (DataTable dataTable) -> {
+
+            String productName = (String) dataTable.asList(String.class).get(0);
 
             driver.findElement(By.xpath("//a[@title='"+productName+"']/ancestor::li")).click();
             driver.findElement(By.xpath("//a[@title='"+productName+"']/ancestor::li")).click();
